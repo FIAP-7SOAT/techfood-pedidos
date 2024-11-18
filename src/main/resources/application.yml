@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: techfood-pedidos
+
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/techfood-pedidos
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+client:
+  service:
+    base-url: http://localhost:8081
+
+product:
+  service:
+    base-url: http://localhost:8082
