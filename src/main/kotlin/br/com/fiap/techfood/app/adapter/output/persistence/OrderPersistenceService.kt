@@ -14,36 +14,26 @@ import java.util.*
 @PersistenceAdapter
 @Transactional
 class OrderPersistenceService(
-    private val orderRepository: OrderRepository,
-    private val orderItemRepository: OrderItemRepository
-
+    private val orderRepository: OrderRepository
     ) : OrderOutputPort {
 
     override fun save(order: Order): Order {
-        // Fetch the existing OrderEntity if it exists
         val existingOrderEntity = orderRepository.findById(order.id).orElse(null)
 
         if (existingOrderEntity != null) {
-            // Update only the status of the entity, avoid unnecessary re-mapping
             existingOrderEntity.status = order.status
         }
 
-        // Convert Order to OrderEntity, preserving existing items if applicable
         val orderEntity = order.toEntity(existingOrderEntity)
 
-        // Associate each OrderItemEntity with the OrderEntity
-        orderEntity.items.forEach { item ->
+        orderEntity.items?.forEach { item ->
             item.order = orderEntity
         }
 
-        // Save the updated OrderEntity (this cascades to the items)
         val savedOrderEntity = orderRepository.save(orderEntity)
 
-        // Return the saved Order as a domain object
         return savedOrderEntity.toDomain()
     }
-
-
 
     override fun findAllByStatus(status: OrderStatusEnum): List<Order> {
         return orderRepository.findAllByStatus(status).map { it.toDomain() }

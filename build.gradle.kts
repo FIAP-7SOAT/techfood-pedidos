@@ -11,6 +11,7 @@ plugins {
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.flywaydb.flyway") version "10.13.0"
+	id("jacoco")
 }
 
 group = "br.com.fiap"
@@ -53,6 +54,8 @@ dependencies {
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
+	testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+
 	testImplementation("com.h2database:h2")
 	testImplementation("com.ninja-squad:springmockk:$springMockk")
 	testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
@@ -78,18 +81,53 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+jacoco {
+	toolVersion = "0.8.8" // Especificar a versão do JaCoCo
+}
 
-/************************
- * JaCoCo Configuration *
- ************************/
-val exclusions = listOf(
-	"**/*DTO.**",
-	"**/*Entity.**",
-	"**/*Request.**",
-	"**/*Response.**",
-	"**/advice/**",
-	"**/app/**",
-	"**/config/**",
-	"**/domain/**",
-	"**/exception/**",
-)
+tasks.jacocoTestReport {
+	dependsOn("test") // Garantir que os testes sejam executados antes de gerar o relatório
+
+	reports {
+		xml.required.set(true) // Gerar relatório XML
+		html.required.set(true) // Gerar relatório HTML
+	}
+
+	// Configurar os diretórios de classes com exclusões específicas
+	classDirectories.setFrom(
+		fileTree("$buildDir/classes/kotlin/main") {
+			exclude(
+				"**/app/**", // Pacote 'app'
+				"**/dto/**", // Data Transfer Objects
+				"**/mapper/**", // Mapeadores
+				"**/configuration/**", // Configurações
+				"**/generated/**", // Código gerado
+				"**/web/advice/**", // Excluir o pacote web.advice
+//				"**/exception/**", // Classes de exceção
+//				"**/utils/**", // Classes utilitárias
+//				"**/*Test*", // Excluir classes de teste
+//				"**/core/domain/**", // Classes de domínio puro (caso sejam modelos)
+//				"**/core/common/**", // Classes de uso geral ou comuns
+				"**/core/domain/vo/**", // Classes de domínio puro (caso sejam modelos)
+				"**/core/domain/"
+			)
+		}
+	)
+}
+
+tasks.jacocoTestCoverageVerification {
+	dependsOn(tasks.test)
+
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.80.toBigDecimal() // Cobertura mínima de 80%
+			}
+		}
+	}
+}
+
+
+
+
+

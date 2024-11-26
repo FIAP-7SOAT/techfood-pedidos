@@ -6,7 +6,7 @@ import java.util.*
 data class Order(
     val id: UUID,
     val name: String,
-    val items: List<OrderItem> = listOf(), // Default to an empty list
+    val items: List<OrderItem> = listOf(),
     var status: OrderStatusEnum,
     val isAnonymous: Boolean,
     val clientId: UUID?,

@@ -5,6 +5,8 @@ import br.com.fiap.techfood.app.adapter.input.web.order.dto.WebOrderResponse
 import br.com.fiap.techfood.app.adapter.input.web.order.mapper.toDomainOrderRequest
 import br.com.fiap.techfood.app.adapter.input.web.order.mapper.toOrderResponse
 import br.com.fiap.techfood.core.port.input.OrderInputPort
+import jakarta.validation.Valid
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -15,10 +17,14 @@ class OrderResource(
 ) {
 
     @PostMapping
-    fun createOrder(@RequestBody orderRequest: WebOrderRequest): WebOrderResponse {
+    fun createOrder(@RequestBody @Valid orderRequest: WebOrderRequest): ResponseEntity<WebOrderResponse> {
+        if (orderRequest.orderName.isNullOrEmpty() || orderRequest.orderItems.isNullOrEmpty()) {
+            return ResponseEntity.badRequest().build()
+        }
+
         val domainOrderRequest = orderRequest.toDomainOrderRequest()
         val order = orderInput.save(domainOrderRequest)
-        return order.toOrderResponse()
+        return ResponseEntity.ok(order.toOrderResponse())
     }
 
     @GetMapping("/awaiting-payment")

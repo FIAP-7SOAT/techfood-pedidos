@@ -12,15 +12,14 @@ data class OrderItemEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("orderId")
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    @JsonBackReference // Prevent infinite recursion during serialization
-    var order: OrderEntity? = null,  // Make sure order is set
+    @JsonBackReference
+    var order: OrderEntity? = null,
 
     @Column(nullable = false)
     var quantity: Int? = null,
 
     var description: String? = null
 ) {
-    // Override the toString method to avoid printing the order reference
     override fun toString(): String {
         return "OrderItemEntity(id=$id, quantity=$quantity, description=$description)"  // Avoid printing the order reference
     }

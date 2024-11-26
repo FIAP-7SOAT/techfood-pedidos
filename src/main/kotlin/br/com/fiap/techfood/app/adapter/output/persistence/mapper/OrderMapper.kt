@@ -5,6 +5,7 @@ import br.com.fiap.techfood.app.adapter.output.persistence.entity.OrderItemEntit
 import br.com.fiap.techfood.app.adapter.output.persistence.entity.OrderItemPk
 import br.com.fiap.techfood.core.domain.Order
 import br.com.fiap.techfood.core.domain.OrderItem
+import br.com.fiap.techfood.core.domain.enums.OrderStatusEnum
 import java.time.LocalDateTime
 import java.util.*
 
@@ -22,9 +23,12 @@ fun Order.toEntity(existingEntity: OrderEntity? = null): OrderEntity {
         timeToPrepare = this.timeToPrepare ?: 0
     )
 
-    // Clear existing items and add new ones
-    orderEntity.items.clear()
-    orderEntity.items.addAll(
+    if (orderEntity.items == null) {
+        orderEntity.items = mutableListOf()
+    }
+
+    orderEntity.items!!.clear()
+    orderEntity.items!!.addAll(
         (this.items ?: listOf()).map { item ->
             val orderItemEntity = item.toEntity(orderEntity.id)
             orderItemEntity.order = orderEntity
@@ -35,8 +39,6 @@ fun Order.toEntity(existingEntity: OrderEntity? = null): OrderEntity {
     orderEntity.lastUpdateDate = LocalDateTime.now()
     return orderEntity
 }
-
-
 
 fun OrderItem.toEntity(orderId: UUID): OrderItemEntity {
     return OrderItemEntity(
@@ -49,19 +51,17 @@ fun OrderItem.toEntity(orderId: UUID): OrderItemEntity {
     )
 }
 
-
 fun OrderEntity.toDomain(): Order {
     return Order(
-        id = this.id!!,
-        name = this.name ?: "Unknown", // Provide a default value
-        status = this.status,
-        isAnonymous = this.isAnonymous ?: false, // Default to false if null
+        id = this.id ?: throw IllegalArgumentException("Order ID is missing"),
+        name = this.name ?: "Unknown",
+        status = this.status ?: OrderStatusEnum.AWAITING_PAYMENT,
+        isAnonymous = this.isAnonymous ?: false,
         clientId = this.clientId,
-        items = this.items.map { it.toDomain() },
-        timeToPrepare = this.timeToPrepare
+        items = this.items?.map { it.toDomain() } ?: emptyList(),
+        timeToPrepare = this.timeToPrepare ?: 0
     )
 }
-
 
 fun OrderItemEntity.toDomain(): OrderItem {
     return OrderItem(
@@ -70,4 +70,3 @@ fun OrderItemEntity.toDomain(): OrderItem {
         description = this.description
     )
 }
-

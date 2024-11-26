@@ -78,6 +78,8 @@ class OrderUseCase(
     override fun approvePayment(id: UUID) {
         // Fetch the existing Order domain object
         val existingOrder = orderOutput.findById(id)
+            ?: throw Exception("Order not found")
+
 
         // Update only the status
         existingOrder.status = OrderStatusEnum.PAYMENT_APPROVED

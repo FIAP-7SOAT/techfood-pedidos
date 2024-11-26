@@ -15,17 +15,16 @@ class JacksonConfig {
     @Bean
     fun objectMapper(): ObjectMapper {
         return ObjectMapper().apply {
-            // Register existing modules
-            registerKotlinModule() // From ObjectMapperConfig
-            registerModule(JavaTimeModule()) // From ObjectMapperConfig
 
-            // Add the custom deserializer module
+            registerKotlinModule()
+            registerModule(JavaTimeModule())
+
+
             val module = SimpleModule().apply {
                 addDeserializer(CategoryEnum::class.java, CategoryEnumDeserializer())
             }
             registerModule(module)
 
-            // Configure other options
             configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         }
     }

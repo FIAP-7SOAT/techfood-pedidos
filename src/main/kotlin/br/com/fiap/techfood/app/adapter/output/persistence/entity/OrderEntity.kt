@@ -22,8 +22,8 @@ data class OrderEntity(
     var isAnonymous: Boolean? = null,
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JsonManagedReference // Prevent infinite recursion during serialization
-    var items: MutableList<OrderItemEntity> = mutableListOf(),
+    @JsonManagedReference
+    var items: MutableList<OrderItemEntity>? = mutableListOf(),
 
     var timeToPrepare: Int? = null,
 
@@ -36,8 +36,7 @@ data class OrderEntity(
     @Column(nullable = false)
     var lastUpdateDate: LocalDateTime? = null
 ){
-    // Override the toString method to avoid printing the full object graph (recursion)
     override fun toString(): String {
-        return "OrderEntity(id=$id, name=$name, status=$status, itemsCount=${items.size})"  // Avoid printing the items list
+        return "OrderEntity(id=$id, name=$name, status=$status, itemsCount=${items?.size})"  // Avoid printing the items list
     }
 }
