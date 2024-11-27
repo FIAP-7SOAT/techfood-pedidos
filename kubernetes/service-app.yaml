@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: techfood-pedidos-app
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 8080
-      nodePort: 30080
   selector:
-    app: techfood-app
+    app: techfood-pedidos-app
