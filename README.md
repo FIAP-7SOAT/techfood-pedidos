@@ -52,20 +52,6 @@ O TechFood Clientes expõe as seguintes APIs para integração:
 - Finalizar Pedido
 - Excluir Pedido
 
-A ideia principal é que os administradores tenha acesso a um painel de controle para gerenciar produtos e categorias.
-
-### Principais Tecnologias Utilizadas
-
-- **Kotlin**
-- **Java 17**
-- **Spring-Boot 3.2.5**
-- **PostgreSQL**
-- **Docker**
-- **Swagger**
-- **Gradle 8**
-- **Kubernetes**
-- **Terraform**
-
 ### Como Executar
 
 Para executar o sistema, siga as instruções abaixo:
