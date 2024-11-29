@@ -1,4 +1,4 @@
-# TechFood Pedidos- Sistema de Autoatendimento para Restaurante FastFood
+# TechFood Pedidos - Sistema de Autoatendimento para Restaurante FastFood
 
 Este é um projeto do curso de Pós-graduação em Arquitetura de Software da FIAP compreende uma solução possível para um sistema de autoatendimento de restaurante do tipo fast-food, com quiosques ou terminais de autoatendimento, com o objetivo de otimizar o processo de pedidos, pagamento, preparação e entrega de comida..
 
@@ -38,7 +38,7 @@ Lista de arquivos YAML com recursos do Kubernetes:
 
 ## APIs Disponíveis
 
-O TechFood Clientes expõe as seguintes APIs para integração:
+O TechFood Pedidos expõe as seguintes APIs para integração:
 
 - Listar pedidos (Status)
   - Esperando Pagamnto
