@@ -3,14 +3,22 @@ name: Deploy Kotlin App to EKS
 on:
   push:
     branches: "*"
+  workflow_run:
+    workflows: ["Test & Coverage"]
+    types:
+      - completed
+    branches: "*"
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: kotlin-app
+  ECR_REPOSITORY: kotlin-appgit ch
   CLUSTER_NAME: techfood-eks
 
 jobs:
   deploy:
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
