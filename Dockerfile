@@ -25,10 +25,10 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built jar from the build stage and rename it to techfood-pedidos-0.0.1-SNAPSHOT.jar
-COPY --from=builder /app/build/libs/*.jar techfood-pedidos-0.0.1-SNAPSHOT.jar
+COPY --from=builder /app/build/libs/techfood-pedidos-0.0.1-SNAPSHOT.jar /app/techfood-pedidos-0.0.1-SNAPSHOT.jar
 
 # Expose the application port
-EXPOSE 8080
+EXPOSE 8083
 
 # Command to run the application
 ENTRYPOINT ["java", "-jar", "techfood-pedidos-0.0.1-SNAPSHOT.jar"]

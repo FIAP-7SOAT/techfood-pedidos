@@ -5,11 +5,16 @@ spring:
   application:
     name: techfood-pedidos
 
+    cloud:
+      config:
+        enabled: false
+
   profiles:
     active: dev
 
   datasource:
-    url: jdbc:postgresql://localhost:5435/techfood-pedidos
+#    url: jdbc:postgresql://localhost:5435/techfood-pedidos
+    url: jdbc:postgresql://postgres:5435/techfood-pedidos
     username: postgres
     password: postgres
 
@@ -18,10 +23,16 @@ spring:
       ddl-auto: none
     show-sql: true
 
+#client:
+#  service:
+#    base-url: http://localhost:8081
+#
+#product:
+#  service:
+#    base-url: http://localhost:8082
 client:
   service:
-    base-url: http://localhost:8081
-
+    base-url: http://techfood-clientes:8081
 product:
   service:
-    base-url: http://localhost:8082
+    base-url: http://techfood-produtos:8082

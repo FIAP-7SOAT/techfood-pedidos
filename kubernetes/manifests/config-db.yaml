@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-init-scripts
+  namespace: techfood-pedidos
 data:
   1_schema.sql: |-
     -- Table: tb_orders

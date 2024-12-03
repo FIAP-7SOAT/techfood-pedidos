@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgres-pedidos:
     image: postgres:13.3-alpine
     container_name: postgres-pedidos
     ports:
@@ -12,8 +12,10 @@ services:
       - POSTGRES_USER=postgres
     volumes:
       - ./src/main/resources/sql_scripts/:/docker-entrypoint-initdb.d
+    networks:
+      - techfood-network
 
-  app:
+  techfood-pedidos-app:
     container_name: techfood-pedidos-app
     build:
       context: .
@@ -21,8 +23,17 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - postgres
+      - postgres-pedidos
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/techfood-pedidos
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-pedidos:5432/techfood-pedidos
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - CLIENTES_SERVICE_URL=http://techfood-clientes-app:8081
+      - PRODUTOS_SERVICE_URL=http://techfood-produtos-app:8082
+    restart: always
+    networks:
+      - techfood-network
+
+networks:
+  techfood-network:
+    external: true

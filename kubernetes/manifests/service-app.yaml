@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: techfood-pedidos-app
+  namespace: techfood-pedidos
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8083        # Porta do serviço no Kubernetes
+      targetPort: 8083  # Porta interna do container
+      nodePort: 30083   # Porta exposta na máquina host (para acesso externo)
+  selector:
+    app: techfood-app
