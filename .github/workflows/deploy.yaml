@@ -3,11 +3,11 @@ name: Deploy Kotlin App to EKS
 on:
   push:
     branches: "*"
-  # workflow_run:
-  #   workflows: ["Test & Coverage"]
-  #   types:
-  #     - completed
-  #   branches: "*"
+  workflow_run:
+    workflows: ["Test & Coverage"]
+    types:
+      - completed
+    branches: "*"
 
 env:
   AWS_REGION: us-east-1
@@ -16,9 +16,9 @@ env:
 
 jobs:
   deploy:
-    # if: |
-    #   github.event_name == 'push' ||
-    #   (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
