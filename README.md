@@ -69,10 +69,36 @@ $ git clone https://github.com/FIAP-7SOAT/techfood-pedidos
 $ cd techfood-pedidos
 ```
 
-4. Escolha como quer executar
+### Script para Iniciar o Serviço
 
-- [Docker](docs/docker.md)
-- [Kubernetes](docs/kubernetes.md)
+Para iniciar os aplicativos, utilize o script localizado em: `start/start.sh`
+
+Comando para executar:
+
+```
+cd start
+./start.sh
+```
+
+### Script para Deploy
+
+Para realizar o deploy dos aplicativos seguindo a sequência correta e evitar erros, utilize o script localizado em `kubernetes/scripts/deploy.sh`
+
+#### Comando para executar
+
+```bash
+cd kubernetes/scripts
+./deploy.sh
+```
+
+Os arquivos de configuração para o deploy estão na pasta `kubernetes/manifests/`
+
+### Cobertura de Testes
+
+Utilizamos o **[JacocoReport](https://www.jacoco.org/jacoco/trunk/index.html)** para gerar relatórios de cobertura de testes.
+
+1. Comando para gerar o relatório: `./gradlew jacocoTestReport`.
+2. Localização do relatório gerado: `/techfood-pedidos/build/reports/jacoco/test/html`
 
 ### Banco de dados
 
@@ -109,7 +135,8 @@ Baixar o Postman ou o API Client de sua preferência e importar a collection:
 - **Gradle 8**
 - **Kubernetes**
 - **Terraform**
+- **JacocoReport**
 
---
+---
 
 Acesse a **[documentação principal](https://github.com/FIAP-7SOAT/techfood-docs)** do projeto para mais detalhes!
