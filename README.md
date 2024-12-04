@@ -52,7 +52,7 @@ O TechFood Pedidos expõe as seguintes APIs para integração:
 - Finalizar Pedido
 - Excluir Pedido
 
-### Como Executar
+## Como Executar
 
 Para executar o sistema, siga as instruções abaixo:
 
@@ -100,7 +100,7 @@ Utilizamos o **[JacocoReport](https://www.jacoco.org/jacoco/trunk/index.html)** 
 1. Comando para gerar o relatório: `./gradlew jacocoTestReport`.
 2. Localização do relatório gerado: `/techfood-pedidos/build/reports/jacoco/test/html`
 
-### Banco de dados
+## Banco de dados
 
 Leia a documentação do banco de dados [aqui](docs/database.md)
 
@@ -113,18 +113,18 @@ Para vizualizar o Banco de Dados através, recomendamos que baixe o DBeaver ou o
 - Username: postgres
 - Password: postgres
 
-### Acessando Swagger
+## Acessando Swagger
 
 Acesse a documentação da API através do Swagger para começar a interagir com o sistema.
 Para acessar o Swagger utilize a url [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
 
-### Postman Collection
+## Postman Collection
 
 Baixar o Postman ou o API Client de sua preferência e importar a collection:
 
 [API Client Collection](src/main/resources/collection/fiap_techfood_postman_collection.json).
 
-### Principais Tecnologias Utilizadas
+## Principais Tecnologias Utilizadas
 
 - **Kotlin**
 - **Java 17**
